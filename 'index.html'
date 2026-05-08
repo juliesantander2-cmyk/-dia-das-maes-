@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandes Inspirações de Mães e Mulheres</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f9e4e4 0%, #e8d5d5 50%, #d4c4c4 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 3.5em;
+            color: #8B4513;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.4em;
+            color: #654321;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .search-container {
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: 3px solid #D2691E;
+            border-radius: 50px;
+            width: 400px;
+            max-width: 90%;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-family: inherit;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #CD853F;
+            box-shadow: 0 0 20px rgba(210, 105, 30, 0.3);
+        }
+
+        .mothers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .mother-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mother-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FF69B4, #DDA0DD, #FFB6C1);
+        }
+
+        .mother-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border-color: #FF69B4;
+        }
+
+        .mother-name {
+            font-size: 2em;
+            color: #8B4513;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .mother-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #FFE4E1;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .story {
+            background: linear-gradient(135deg, #FFF8DC, #F0E68C);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #654321;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .story.active {
+            display: block;
+        }
+
+        .spotify-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #1DB954, #1ED760);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(29, 185, 84, 0.3);
+        }
+
+        .spotify-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
+        }
+
+        .family-photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .family-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 3px solid #FFE4E1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5em;
+            }
+            .mothers-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-box {
+                width: 90%;
+            }
+        }
+
+        .heart {
+            color: #FF69B4;
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Algumas grandes inspirações de mães e mulheres <span class="heart">💖</span></h1>
+        <p class="subtitle">Histórias de amor, força e dedicação que inspiram gerações</p>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" placeholder="Pesquisar por nome... 👩‍👧‍👦">
+        </div>
+
+        <div class="mothers-grid" id="mothersGrid">
+            <!-- As mães serão inseridas aqui via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const mothers = [
+            {
+                name: "Eloá Santander",
+                photo: "https://via.placeholder.com/120x120/FF69B4/FFFFFF?text=Eloá",
+                story: "Eloá é a definição de amor incondicional. Mãe dedicada que sempre soube equilibrar carreira e família com maestria. Sua força silenciosa e sabedoria são lições diárias para todos ao seu redor.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/FFB6C1/FFFFFF?text=Família",
+                    "https://via.placeholder.com/80x80/DDA0DD/FFFFFF?text=Filhos"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Cleide Santander",
+                photo: "https://via.placeholder.com/120x120/DDA0DD/FFFFFF?text=Cleide",
+                story: "Cleide construiu uma família sólida com muito trabalho e carinho. Sua casa sempre foi o refúgio de todos, cheia de risadas e histórias inesquecíveis.",
+                familyPhotos: ["https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Família"],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Milena Araripe",
+                photo: "https://via.placeholder.com/120x120/FFB6C1/FFFFFF?text=Milena",
+                story: "Milena é sinônimo de alegria contagiante. Sua energia positiva transforma qualquer ambiente e seu amor pelos filhos é exemplo para todos.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/DDA0DD/FFFFFF?text=Filhos",
+                    "https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Família"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Maíra Bezerra",
+                photo: "https://via.placeholder.com/120x120/FF1493/FFFFFF?text=Maíra",
+                story: "Maíra é guerreira incansável. Enfrentou todos os desafios da vida com um sorriso no rosto e um coração gigante para sua família.",
+                familyPhotos: ["https://via.placeholder.com/80x80/FFB6C1/FFFFFF?text=Família"],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Larissa Bezerra",
+                photo: "https://via.placeholder.com/120x120/Pink/FFFFFF?text=Larissa",
+                story: "Larissa tem o dom de fazer todos se sentirem especiais. Sua paciência e dedicação como mãe são verdadeiramente inspiradoras.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Filhos"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Germana Bezerra",
+                photo: "https://via.placeholder.com/120x120/DDA0DD/FFFFFF?text=Germana",
+                story: "Germana é a avó que todos sonham em ter. Sua sabedoria e histórias de vida são um verdadeiro tesouro familiar.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/FFB6C1/FFFFFF?text=Netos",
+                    "https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Família"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Zoraida Bezerra",
+                photo: "https://via.placeholder.com/120x120/FF69B4/FFFFFF?text=Zoraida",
+                story: "Zoraida é força pura. Superou adversidades com coragem e construiu uma família unida baseada em valores sólidos.",
+                familyPhotos: ["https://via.placeholder.com/80x80/DDA0DD/FFFFFF?text=Família"],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Telma Silveira",
+                photo: "https://via.placeholder.com/120x120/FFB6C1/FFFFFF?text=Telma",
+                story: "Telma é exemplo de mãe moderna e realizada. Conseguiu realizar seus sonhos sem nunca deixar de lado sua família.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Filhos"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Fatima Silveira",
+                photo: "https://via.placeholder.com/120x120/DDA0DD/FFFFFF?text=Fatima",
+                story: "Fatima é o coração da família. Sua generosidade e amor sem limites fazem dela inesquecível para todos.",
+                familyPhotos: [
+                    "https://via.placeholder.com/80x80/FFB6C1/FFFFFF?text=Família",
+                    "https://via.placeholder.com/80x80/FF69B4/FFFFFF?text=Filhos"
+                ],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            },
+            {
+                name: "Maura Bezerra",
+                photo: "https://via.placeholder.com/120x120/FF1493/FFFFFF?text=Maura",
+                story: "Maura é inspiração viva de superação e amor maternal. Sua jornada é lição de vida para gerações.",
+                familyPhotos: ["https://via.placeholder.com/80x80/DDA0DD/FFFFFF?text=Família"],
+                spotify: "https://open.spotify.com/track/SEU_LINK_AQUI"
+            }
+        ];
+
+        function createMotherCard(mother) {
+            return `
+                <div class="mother-card" data-name="${mother.name.toLowerCase()}">
+                    <img src="${mother.photo}" alt="${mother.name}" class="mother-photo">
+                    <h3 class="mother-name">${mother.name}</h3>
+                    <div class="story ${mother.story ? 'active' : ''}">
+                        <p>${mother.story}</p>
+                        ${mother.familyPhotos && mother.familyPhotos.length > 0 ? `
+                            <div class="family-photos">
+                                ${mother.familyPhotos.map(photo => 
+                                    `<img src="${photo}" alt="Foto família" class="family-photo">`
+                                ).join('')}
+                            </div>
+                        ` : ''}
+                        ${mother.spotify ? `
+                            <a href="${mother.spotify}" target="_blank" class="spotify-link">
+                                🎵 Ouvir música no Spotify
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMothers(mothersToShow) {
+            document.getElementById('mothersGrid').innerHTML = mothersToShow.map(createMotherCard).join('');
+            
+            // Adicionar event listeners para toggle da história
+            document.querySelectorAll('.mother-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const story = this.querySelector('.story');
+                    story.classList.toggle('active');
+                });
+            });
+        }
+
+        // Busca em tempo real
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredMothers = mothers.filter(mother => 
+                mother.name.toLowerCase().includes(searchTerm)
+            );
+            renderMothers(filteredMothers);
+        });
+
+        // Render inicial
+        renderMothers(mothers);
+    </script>
+</body>
+</html>
